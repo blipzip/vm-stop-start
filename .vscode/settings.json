@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "blipzip",
+        "projectKey": "blipzip_vm-stop-start"
+    }
+}

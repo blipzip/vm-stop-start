@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VM Power Control</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+    background: #f5f7fb;
+}
+
+.card {
+    max-width: 420px;
+    margin: 100px auto;
+    text-align: center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card shadow p-4">
+    <h3 class="mb-3">VM Power Control</h3>
+
+    <p>Status: <strong id="status">loading...</strong></p>
+
+    <div class="d-grid gap-2">
+
+        <button id="startBtn" class="btn btn-success">
+            Start
+        </button>
+
+        <button id="stopBtn" class="btn btn-danger">
+            Stop
+        </button>
+
+    </div>
+</div>
+
+<script>
+
+async function loadStatus() {
+
+    const r = await fetch("/status")
+    const data = await r.json()
+
+    const status = data.status
+    document.getElementById("status").innerText = status
+
+    const startBtn = document.getElementById("startBtn")
+    const stopBtn = document.getElementById("stopBtn")
+
+    if (status === "running") {
+        startBtn.disabled = true
+        stopBtn.disabled = false
+    } else {
+        startBtn.disabled = false
+        stopBtn.disabled = true
+    }
+}
+
+async function startVM() {
+    await fetch("/start", {method:"POST"})
+    setTimeout(loadStatus, 1000)
+}
+
+async function stopVM() {
+    await fetch("/stop", {method:"POST"})
+    setTimeout(loadStatus, 1000)
+}
+
+document.getElementById("startBtn").onclick = startVM
+document.getElementById("stopBtn").onclick = stopVM
+
+loadStatus()
+
+</script>
+
+</body>
+</html>
