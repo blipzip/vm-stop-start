@@ -1,1 +1,11 @@
 # vm-stop-start
+
+Requires environment variables:
+```
+PROXMOX_VMID=
+PROXMOX_PORT=
+PROXMOX_HOST=
+PROXMOX_NODE=
+PROXMOX_TOKEN_ID=
+PROXMOX_TOKEN_SECRET=
+```
